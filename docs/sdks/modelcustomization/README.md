@@ -1,5 +1,5 @@
 # ModelCustomization
-(*modelCustomization*)
+(*modelCustomization()*)
 
 ## Overview
 
@@ -22,44 +22,59 @@ Create model customization
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.CreateModelCustomizationRequest;
 import com.writer.sdk.models.operations.CreateModelCustomizationResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.CreateCustomizationRequest;
 import com.writer.sdk.models.shared.HyperParameters;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(486589L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(486589L)
                 .build();
 
-            com.writer.sdk.models.operations.CreateModelCustomizationRequest req = new CreateModelCustomizationRequest(
-                new CreateCustomizationRequest(
-                    "string",
-                    "string"){{
-                    additionalHyperParameters = new HyperParameters(
-                        489382L);
-                    batchSize = 638424L;
-                    description = "Synchronised full-range emulation";
-                    epochs = 134365L;
-                    learningRate = 7865.46d;
-                    promptTemplate = "string";
-                    validationDatasetFileId = "string";
+            CreateModelCustomizationRequest req = CreateModelCustomizationRequest.builder()
+                .createCustomizationRequest(CreateCustomizationRequest.builder()
+                        .name("<value>")
+                        .trainingDatasetFileId("<value>")
+                        .additionalHyperParameters(HyperParameters.builder()
+                            .numVirtualTokens(489382L)
+                            .build())
+                        .batchSize(638424L)
+                        .description("Synchronised full-range emulation")
+                        .epochs(134365L)
+                        .learningRate(7865.46d)
+                        .promptTemplate("<value>")
+                        .validationDatasetFileId("<value>")
+                        .build())
+                .modelId("<value>")
+                .build();
 
-                }},
-                "string");
+            CreateModelCustomizationResponse res = sdk.modelCustomization().create()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.CreateModelCustomizationResponse res = sdk.modelCustomization.create(req);
-
-            if (res.modelCustomization != null) {
+            if (res.modelCustomization().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -76,8 +91,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.CreateModelCustomizationResponse](../../models/operations/CreateModelCustomizationResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.CreateModelCustomizationResponse>](../../models/operations/CreateModelCustomizationResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## delete
 
@@ -89,30 +109,45 @@ Delete Model customization
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.DeleteModelCustomizationRequest;
 import com.writer.sdk.models.operations.DeleteModelCustomizationResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(545907L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(545907L)
                 .build();
 
-            com.writer.sdk.models.operations.DeleteModelCustomizationRequest req = new DeleteModelCustomizationRequest(
-                "string",
-                "string");
+            DeleteModelCustomizationRequest req = DeleteModelCustomizationRequest.builder()
+                .customizationId("<value>")
+                .modelId("<value>")
+                .build();
 
-            com.writer.sdk.models.operations.DeleteModelCustomizationResponse res = sdk.modelCustomization.delete(req);
+            DeleteModelCustomizationResponse res = sdk.modelCustomization().delete()
+                .request(req)
+                .call();
 
-            if (res.object != null) {
+            if (res.object().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -129,8 +164,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.DeleteModelCustomizationResponse](../../models/operations/DeleteModelCustomizationResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.DeleteModelCustomizationResponse>](../../models/operations/DeleteModelCustomizationResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## get
 
@@ -142,30 +182,45 @@ Get model customization
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.GetModelCustomizationRequest;
 import com.writer.sdk.models.operations.GetModelCustomizationResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(700347L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(700347L)
                 .build();
 
-            com.writer.sdk.models.operations.GetModelCustomizationRequest req = new GetModelCustomizationRequest(
-                "string",
-                "string");
+            GetModelCustomizationRequest req = GetModelCustomizationRequest.builder()
+                .customizationId("<value>")
+                .modelId("<value>")
+                .build();
 
-            com.writer.sdk.models.operations.GetModelCustomizationResponse res = sdk.modelCustomization.get(req);
+            GetModelCustomizationResponse res = sdk.modelCustomization().get()
+                .request(req)
+                .call();
 
-            if (res.modelCustomization != null) {
+            if (res.modelCustomization().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -182,8 +237,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.GetModelCustomizationResponse](../../models/operations/GetModelCustomizationResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.GetModelCustomizationResponse>](../../models/operations/GetModelCustomizationResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## list
 
@@ -195,29 +255,44 @@ List model customizations
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.ListModelCustomizationsRequest;
 import com.writer.sdk.models.operations.ListModelCustomizationsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(768578L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(768578L)
                 .build();
 
-            com.writer.sdk.models.operations.ListModelCustomizationsRequest req = new ListModelCustomizationsRequest(
-                "string");
+            ListModelCustomizationsRequest req = ListModelCustomizationsRequest.builder()
+                .modelId("<value>")
+                .build();
 
-            com.writer.sdk.models.operations.ListModelCustomizationsResponse res = sdk.modelCustomization.list(req);
+            ListModelCustomizationsResponse res = sdk.modelCustomization().list()
+                .request(req)
+                .call();
 
-            if (res.customizationsResponse != null) {
+            if (res.customizationsResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -234,5 +309,10 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.ListModelCustomizationsResponse](../../models/operations/ListModelCustomizationsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.ListModelCustomizationsResponse>](../../models/operations/ListModelCustomizationsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |

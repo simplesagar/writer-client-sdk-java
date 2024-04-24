@@ -1,5 +1,5 @@
 # CoWrite
-(*coWrite*)
+(*coWrite()*)
 
 ## Overview
 
@@ -20,44 +20,53 @@ Generate content using predefined templates
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.GenerateContentRequest;
 import com.writer.sdk.models.operations.GenerateContentResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.GenerateTemplateRequest;
 import com.writer.sdk.models.shared.MagicRequestInput;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(569932L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(569932L)
                 .build();
 
-            com.writer.sdk.models.operations.GenerateContentRequest req = new GenerateContentRequest(
-                new GenerateTemplateRequest(
-                    "string"){{
-                    inputs = new com.writer.sdk.models.shared.MagicRequestInput[]{{
-                        add(new MagicRequestInput(
-                        "string"){{
-                            name = "string";
-                            value = new String[]{{
-                                add("string"),
-                            }};
-                        }}),
-                    }};
+            GenerateContentRequest req = GenerateContentRequest.builder()
+                .generateTemplateRequest(GenerateTemplateRequest.builder()
+                        .templateId("<value>")
+                        .inputs(java.util.List.of(
+                            MagicRequestInput.builder()
+                                .name("<value>")
+                                .build()))
+                        .build())
+                .teamId(888452L)
+                .build();
 
-                }},
-                888452L);
+            GenerateContentResponse res = sdk.coWrite().generateContent()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.GenerateContentResponse res = sdk.coWrite.generateContent(req);
-
-            if (res.draft != null) {
+            if (res.draft().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -74,8 +83,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.GenerateContentResponse](../../models/operations/GenerateContentResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.GenerateContentResponse>](../../models/operations/GenerateContentResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## listTemplates
 
@@ -87,30 +101,45 @@ Get a list of your existing CoWrite templates
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.ListTemplatesRequest;
 import com.writer.sdk.models.operations.ListTemplatesResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(380445L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(380445L)
                 .build();
 
-            com.writer.sdk.models.operations.ListTemplatesRequest req = new ListTemplatesRequest(
-                882866L,
-                "string");
+            ListTemplatesRequest req = ListTemplatesRequest.builder()
+                .teamId(882866L)
+                .templateId("<value>")
+                .build();
 
-            com.writer.sdk.models.operations.ListTemplatesResponse res = sdk.coWrite.listTemplates(req);
+            ListTemplatesResponse res = sdk.coWrite().listTemplates()
+                .request(req)
+                .call();
 
-            if (res.templateDetailsResponse != null) {
+            if (res.templateDetailsResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -127,5 +156,10 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.ListTemplatesResponse](../../models/operations/ListTemplatesResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.ListTemplatesResponse>](../../models/operations/ListTemplatesResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |

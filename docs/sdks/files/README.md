@@ -1,5 +1,5 @@
 # Files
-(*files*)
+(*files()*)
 
 ## Overview
 
@@ -22,29 +22,44 @@ Delete file
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.DeleteFileRequest;
 import com.writer.sdk.models.operations.DeleteFileResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(545907L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(545907L)
                 .build();
 
-            com.writer.sdk.models.operations.DeleteFileRequest req = new DeleteFileRequest(
-                "string");
+            DeleteFileRequest req = DeleteFileRequest.builder()
+                .fileId("<value>")
+                .build();
 
-            com.writer.sdk.models.operations.DeleteFileResponse res = sdk.files.delete(req);
+            DeleteFileResponse res = sdk.files().delete()
+                .request(req)
+                .call();
 
-            if (res.object != null) {
+            if (res.object().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -61,8 +76,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.DeleteFileResponse](../../models/operations/DeleteFileResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.DeleteFileResponse>](../../models/operations/DeleteFileResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## get
 
@@ -74,29 +94,44 @@ Get file
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.GetFileRequest;
 import com.writer.sdk.models.operations.GetFileResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(700347L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(700347L)
                 .build();
 
-            com.writer.sdk.models.operations.GetFileRequest req = new GetFileRequest(
-                "string");
+            GetFileRequest req = GetFileRequest.builder()
+                .fileId("<value>")
+                .build();
 
-            com.writer.sdk.models.operations.GetFileResponse res = sdk.files.get(req);
+            GetFileResponse res = sdk.files().get()
+                .request(req)
+                .call();
 
-            if (res.modelFile != null) {
+            if (res.modelFile().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -113,8 +148,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.GetFileResponse](../../models/operations/GetFileResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.GetFileResponse>](../../models/operations/GetFileResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## list
 
@@ -126,29 +166,43 @@ List files
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.ListFilesRequest;
 import com.writer.sdk.models.operations.ListFilesResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(768578L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(768578L)
                 .build();
 
-            com.writer.sdk.models.operations.ListFilesRequest req = new ListFilesRequest(
-);
+            ListFilesRequest req = ListFilesRequest.builder()
+                .build();
 
-            com.writer.sdk.models.operations.ListFilesResponse res = sdk.files.list(req);
+            ListFilesResponse res = sdk.files().list()
+                .request(req)
+                .call();
 
-            if (res.modelFilesResponse != null) {
+            if (res.modelFilesResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -165,8 +219,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.ListFilesResponse](../../models/operations/ListFilesResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.ListFilesResponse>](../../models/operations/ListFilesResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## upload
 
@@ -178,34 +237,51 @@ Upload file
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.UploadFileRequest;
 import com.writer.sdk.models.operations.UploadFileResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.File;
 import com.writer.sdk.models.shared.Security;
 import com.writer.sdk.models.shared.UploadModelFileRequest;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(403654L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(403654L)
                 .build();
 
-            com.writer.sdk.models.operations.UploadFileRequest req = new UploadFileRequest(
-                new UploadModelFileRequest(
-                    new File(
-                        "0x7cbca97eC6".getBytes(),
-                        "string")));
+            UploadFileRequest req = UploadFileRequest.builder()
+                .uploadModelFileRequest(UploadModelFileRequest.builder()
+                        .file(File.builder()
+                                .content("0x7cbca97eC6".getBytes())
+                                .fileName("<value>")
+                                .build())
+                        .build())
+                .build();
 
-            com.writer.sdk.models.operations.UploadFileResponse res = sdk.files.upload(req);
+            UploadFileResponse res = sdk.files().upload()
+                .request(req)
+                .call();
 
-            if (res.modelFile != null) {
+            if (res.modelFile().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -222,5 +298,10 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.UploadFileResponse](../../models/operations/UploadFileResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.UploadFileResponse>](../../models/operations/UploadFileResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |

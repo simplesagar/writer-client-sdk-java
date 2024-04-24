@@ -3,9 +3,9 @@
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `xRequestID`       | *String*           | :heavy_minus_sign: | N/A                |
-| `ids`              | List<*String*>     | :heavy_minus_sign: | N/A                |
-| `organizationId`   | *Long*             | :heavy_minus_sign: | N/A                |
-| `teamId`           | *Long*             | :heavy_check_mark: | N/A                |
+| Field                        | Type                         | Required                     | Description                  |
+| ---------------------------- | ---------------------------- | ---------------------------- | ---------------------------- |
+| `xRequestID`                 | *Optional<? extends String>* | :heavy_minus_sign:           | N/A                          |
+| `ids`                        | List<*String*>               | :heavy_minus_sign:           | N/A                          |
+| `organizationId`             | *Optional<? extends Long>*   | :heavy_minus_sign:           | N/A                          |
+| `teamId`                     | *long*                       | :heavy_check_mark:           | N/A                          |

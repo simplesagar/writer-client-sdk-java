@@ -1,5 +1,5 @@
 # Content
-(*content*)
+(*content()*)
 
 ## Overview
 
@@ -20,50 +20,67 @@ Check your content against your preset styleguide.
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.ContentCheckRequest;
 import com.writer.sdk.models.operations.ContentCheckResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.ContentRequest;
 import com.writer.sdk.models.shared.ContentSettings;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(935464L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(935464L)
                 .build();
 
-            com.writer.sdk.models.operations.ContentCheckRequest req = new ContentCheckRequest(
-                new ContentRequest(
-                    "string",
-                    new ContentSettings(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false)),
-                38270L);
+            ContentCheckRequest req = ContentCheckRequest.builder()
+                .contentRequest(ContentRequest.builder()
+                        .content("<value>")
+                        .settings(ContentSettings.builder()
+                                .ageAndFamilyStatus(false)
+                                .confidence(false)
+                                .contentSafeguards(false)
+                                .disability(false)
+                                .genderIdentitySensitivity(false)
+                                .genderInclusiveNouns(false)
+                                .genderInclusivePronouns(false)
+                                .grammar(false)
+                                .healthyCommunication(false)
+                                .passiveVoice(false)
+                                .raceEthnicityNationalitySensitivity(false)
+                                .sexualOrientationSensitivity(false)
+                                .spelling(false)
+                                .substanceUseSensitivity(false)
+                                .unclearReference(false)
+                                .wordiness(false)
+                                .build())
+                        .build())
+                .teamId(38270L)
+                .build();
 
-            com.writer.sdk.models.operations.ContentCheckResponse res = sdk.content.check(req);
+            ContentCheckResponse res = sdk.content().check()
+                .request(req)
+                .call();
 
-            if (res.processedContent != null) {
+            if (res.processedContent().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -80,8 +97,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.ContentCheckResponse](../../models/operations/ContentCheckResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.ContentCheckResponse>](../../models/operations/ContentCheckResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## correct
 
@@ -93,53 +115,68 @@ Apply the style guide suggestions directly to your content.
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.ContentCorrectRequest;
 import com.writer.sdk.models.operations.ContentCorrectResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.ContentRequest;
 import com.writer.sdk.models.shared.ContentSettings;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(501355L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(501355L)
                 .build();
 
-            com.writer.sdk.models.operations.ContentCorrectRequest req = new ContentCorrectRequest(
-                new ContentRequest(
-                    "string",
-                    new ContentSettings(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false)),
-                31310L){{
-                xRequestID = "string";
+            ContentCorrectRequest req = ContentCorrectRequest.builder()
+                .contentRequest(ContentRequest.builder()
+                        .content("<value>")
+                        .settings(ContentSettings.builder()
+                                .ageAndFamilyStatus(false)
+                                .confidence(false)
+                                .contentSafeguards(false)
+                                .disability(false)
+                                .genderIdentitySensitivity(false)
+                                .genderInclusiveNouns(false)
+                                .genderInclusivePronouns(false)
+                                .grammar(false)
+                                .healthyCommunication(false)
+                                .passiveVoice(false)
+                                .raceEthnicityNationalitySensitivity(false)
+                                .sexualOrientationSensitivity(false)
+                                .spelling(false)
+                                .substanceUseSensitivity(false)
+                                .unclearReference(false)
+                                .wordiness(false)
+                                .build())
+                        .build())
+                .teamId(31310L)
+                .xRequestID("<value>")
+                .build();
 
-            }};
+            ContentCorrectResponse res = sdk.content().correct()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.ContentCorrectResponse res = sdk.content.correct(req);
-
-            if (res.correctionResponse != null) {
+            if (res.correctionResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -156,5 +193,10 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.ContentCorrectResponse](../../models/operations/ContentCorrectResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.ContentCorrectResponse>](../../models/operations/ContentCorrectResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |

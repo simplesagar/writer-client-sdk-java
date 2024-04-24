@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `pageId`           | *Long*             | :heavy_check_mark: | N/A                |
+| `pageId`           | *long*             | :heavy_check_mark: | N/A                |

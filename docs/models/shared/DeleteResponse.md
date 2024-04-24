@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `deleted`          | *Long*             | :heavy_check_mark: | N/A                |
+| `deleted`          | *long*             | :heavy_check_mark: | N/A                |

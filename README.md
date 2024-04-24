@@ -12,10 +12,36 @@
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-### Gradle
+### Getting started
 
+The samples below show how a published SDK artifact is used:
+
+Gradle:
 ```groovy
-implementation 'com.writer.sdk:api:0.44.0'
+implementation 'com.writer.sdk:api:0.45.0'
+```
+
+Maven:
+```xml
+<dependency>
+    <groupId>com.writer.sdk</groupId>
+    <artifactId>api</artifactId>
+    <version>0.45.0</version>
+</dependency>
+```
+
+### How to build
+After cloning the git repository to your file system you can build the SDK artifact from source to the `build` directory by running `./gradlew build` on *nix systems or `gradlew.bat` on Windows systems.
+
+If you wish to build from source and publish the SDK artifact to your local Maven repository (on your filesystem) then use the following command (after cloning the git repo locally):
+
+On *nix:
+```bash
+./gradlew publishToMavenLocal -Pskip.signing
+```
+On Windows:
+```bash
+gradlew.bat publishToMavenLocal -Pskip.signing
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -38,25 +64,38 @@ If you cannot see your secret API keys in the Dashboard, this means you do not h
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.GetSubscriptionDetailsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(850421L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(850421L)
                 .build();
 
-            com.writer.sdk.models.operations.GetSubscriptionDetailsResponse res = sdk.billing.getSubscriptionDetails();
+            GetSubscriptionDetailsResponse res = sdk.billing().getSubscriptionDetails()
+                .call();
 
-            if (res.subscriptionPublicResponseApi != null) {
+            if (res.subscriptionPublicResponseApi().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -68,75 +107,75 @@ public class Application {
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
-### [billing](docs/sdks/billing/README.md)
+### [billing()](docs/sdks/billing/README.md)
 
 * [getSubscriptionDetails](docs/sdks/billing/README.md#getsubscriptiondetails) - Get your organization subscription details
 
-### [aiContentDetector](docs/sdks/aicontentdetector/README.md)
+### [aiContentDetector()](docs/sdks/aicontentdetector/README.md)
 
 * [detect](docs/sdks/aicontentdetector/README.md#detect) - Content detector api
 
-### [content](docs/sdks/content/README.md)
+### [content()](docs/sdks/content/README.md)
 
 * [check](docs/sdks/content/README.md#check) - Check your content against your preset styleguide.
 * [correct](docs/sdks/content/README.md#correct) - Apply the style guide suggestions directly to your content.
 
-### [coWrite](docs/sdks/cowrite/README.md)
+### [coWrite()](docs/sdks/cowrite/README.md)
 
 * [generateContent](docs/sdks/cowrite/README.md#generatecontent) - Generate content using predefined templates
 * [listTemplates](docs/sdks/cowrite/README.md#listtemplates) - Get a list of your existing CoWrite templates
 
-### [files](docs/sdks/files/README.md)
+### [files()](docs/sdks/files/README.md)
 
 * [delete](docs/sdks/files/README.md#delete) - Delete file
 * [get](docs/sdks/files/README.md#get) - Get file
 * [list](docs/sdks/files/README.md#list) - List files
 * [upload](docs/sdks/files/README.md#upload) - Upload file
 
-### [models](docs/sdks/models/README.md)
+### [models()](docs/sdks/models/README.md)
 
 * [list](docs/sdks/models/README.md#list) - List available LLM models
 
-### [completions](docs/sdks/completions/README.md)
+### [completions()](docs/sdks/completions/README.md)
 
 * [create](docs/sdks/completions/README.md#create) - Create completion for LLM model
 * [createModelCustomizationCompletion](docs/sdks/completions/README.md#createmodelcustomizationcompletion) - Create completion for LLM customization model
 
-### [modelCustomization](docs/sdks/modelcustomization/README.md)
+### [modelCustomization()](docs/sdks/modelcustomization/README.md)
 
 * [create](docs/sdks/modelcustomization/README.md#create) - Create model customization
 * [delete](docs/sdks/modelcustomization/README.md#delete) - Delete Model customization
 * [get](docs/sdks/modelcustomization/README.md#get) - Get model customization
 * [list](docs/sdks/modelcustomization/README.md#list) - List model customizations
 
-### [downloadTheCustomizedModel](docs/sdks/downloadthecustomizedmodel/README.md)
+### [downloadTheCustomizedModel()](docs/sdks/downloadthecustomizedmodel/README.md)
 
 * [fetchFile](docs/sdks/downloadthecustomizedmodel/README.md#fetchfile) - Download your fine-tuned model (available only for Palmyra Base and Palmyra Large)
 
-### [document](docs/sdks/document/README.md)
+### [document()](docs/sdks/document/README.md)
 
 * [get](docs/sdks/document/README.md#get) - Get document details
 * [list](docs/sdks/document/README.md#list) - List team documents
 
-### [snippet](docs/sdks/snippet/README.md)
+### [snippet()](docs/sdks/snippet/README.md)
 
 * [delete](docs/sdks/snippet/README.md#delete) - Delete snippets
 * [find](docs/sdks/snippet/README.md#find) - Find snippets
 * [update](docs/sdks/snippet/README.md#update) - Update snippets
 
-### [styleguide](docs/sdks/styleguide/README.md)
+### [styleguide()](docs/sdks/styleguide/README.md)
 
 * [get](docs/sdks/styleguide/README.md#get) - Page details
 * [listPages](docs/sdks/styleguide/README.md#listpages) - List your styleguide pages
 
-### [terminology](docs/sdks/terminology/README.md)
+### [terminology()](docs/sdks/terminology/README.md)
 
 * [add](docs/sdks/terminology/README.md#add) - Add terms
 * [delete](docs/sdks/terminology/README.md#delete) - Delete terms
 * [find](docs/sdks/terminology/README.md#find) - Find terms
 * [update](docs/sdks/terminology/README.md#update) - Update terms
 
-### [user](docs/sdks/user/README.md)
+### [user()](docs/sdks/user/README.md)
 
 * [list](docs/sdks/user/README.md#list) - List users
 <!-- End Available Resources and Operations [operations] -->
@@ -159,7 +198,7 @@ The following global parameter is available. The required parameter must be set 
 
 | Name | Type | Required | Description |
 | ---- | ---- |:--------:| ----------- |
-| organizationId | Long | ✔️ | The organizationId parameter. |
+| organizationId | long | ✔️ | The organizationId parameter. |
 
 
 ### Example
@@ -168,31 +207,47 @@ The following global parameter is available. The required parameter must be set 
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.DetectContentRequest;
 import com.writer.sdk.models.operations.DetectContentResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.ContentDetectorRequest;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(496531L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(496531L)
                 .build();
 
-            com.writer.sdk.models.operations.DetectContentRequest req = new DetectContentRequest(
-                new ContentDetectorRequest(
-                    "string"));
+            DetectContentRequest req = DetectContentRequest.builder()
+                .contentDetectorRequest(ContentDetectorRequest.builder()
+                        .input("<value>")
+                        .build())
+                .build();
 
-            com.writer.sdk.models.operations.DetectContentResponse res = sdk.aiContentDetector.detect(req);
+            DetectContentResponse res = sdk.aiContentDetector().detect()
+                .request(req)
+                .call();
 
-            if (res.classes != null) {
+            if (res.classes().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -204,23 +259,220 @@ public class Application {
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-## Server Selection
-
 ### Select Server by Index
 
-You can override the default server globally using the `setServerIndex` option when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
+You can override the default server globally by passing a server index to the `serverIndex` builder method when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
 | # | Server | Variables |
 | - | ------ | --------- |
 | 0 | `https://enterprise-api.writer.com` | None |
 
+#### Example
 
+```java
+package hello.world;
+
+import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
+import com.writer.sdk.models.operations.GetSubscriptionDetailsResponse;
+import com.writer.sdk.models.shared.*;
+import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
+
+public class Application {
+
+    public static void main(String[] args) {
+        try {
+            Writer sdk = Writer.builder()
+                .serverIndex(0)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(850421L)
+                .build();
+
+            GetSubscriptionDetailsResponse res = sdk.billing().getSubscriptionDetails()
+                .call();
+
+            if (res.subscriptionPublicResponseApi().isPresent()) {
+                // handle response
+            }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
+        } catch (Exception e) {
+            // handle exception
+        }
+    }
+}
+```
 
 
 ### Override Server URL Per-Client
 
-The default server can also be overridden globally using the `setServerURL` option when initializing the SDK client instance. For example:
+The default server can also be overridden globally by passing a URL to the `serverURL` builder method when initializing the SDK client instance. For example:
+```java
+package hello.world;
+
+import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
+import com.writer.sdk.models.operations.GetSubscriptionDetailsResponse;
+import com.writer.sdk.models.shared.*;
+import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
+
+public class Application {
+
+    public static void main(String[] args) {
+        try {
+            Writer sdk = Writer.builder()
+                .serverURL("https://enterprise-api.writer.com")
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(850421L)
+                .build();
+
+            GetSubscriptionDetailsResponse res = sdk.billing().getSubscriptionDetails()
+                .call();
+
+            if (res.subscriptionPublicResponseApi().isPresent()) {
+                // handle response
+            }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
+        } catch (Exception e) {
+            // handle exception
+        }
+    }
+}
+```
 <!-- End Server Selection [server] -->
+
+<!-- Start Error Handling [errors] -->
+## Error Handling
+
+Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will throw the appropriate Exception type.
+
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
+
+### Example
+
+```java
+package hello.world;
+
+import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
+import com.writer.sdk.models.operations.GetSubscriptionDetailsResponse;
+import com.writer.sdk.models.shared.*;
+import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
+
+public class Application {
+
+    public static void main(String[] args) {
+        try {
+            Writer sdk = Writer.builder()
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(850421L)
+                .build();
+
+            GetSubscriptionDetailsResponse res = sdk.billing().getSubscriptionDetails()
+                .call();
+
+            if (res.subscriptionPublicResponseApi().isPresent()) {
+                // handle response
+            }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
+        } catch (Exception e) {
+            // handle exception
+        }
+    }
+}
+```
+<!-- End Error Handling [errors] -->
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+### Per-Client Security Schemes
+
+This SDK supports the following security scheme globally:
+
+| Name     | Type     | Scheme   |
+| -------- | -------- | -------- |
+| `apiKey` | apiKey   | API key  |
+
+You can set the security parameters through the `security` builder method when initializing the SDK client instance. For example:
+```java
+package hello.world;
+
+import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
+import com.writer.sdk.models.operations.GetSubscriptionDetailsResponse;
+import com.writer.sdk.models.shared.*;
+import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
+
+public class Application {
+
+    public static void main(String[] args) {
+        try {
+            Writer sdk = Writer.builder()
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(850421L)
+                .build();
+
+            GetSubscriptionDetailsResponse res = sdk.billing().getSubscriptionDetails()
+                .call();
+
+            if (res.subscriptionPublicResponseApi().isPresent()) {
+                // handle response
+            }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
+        } catch (Exception e) {
+            // handle exception
+        }
+    }
+}
+```
+<!-- End Authentication [security] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

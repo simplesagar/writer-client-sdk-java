@@ -1,5 +1,5 @@
 # Snippet
-(*snippet*)
+(*snippet()*)
 
 ## Overview
 
@@ -21,35 +21,47 @@ Delete snippets
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.DeleteSnippetsRequest;
 import com.writer.sdk.models.operations.DeleteSnippetsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(545907L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(545907L)
                 .build();
 
-            com.writer.sdk.models.operations.DeleteSnippetsRequest req = new DeleteSnippetsRequest(
-                841399L){{
-                xRequestID = "string";
-                ids = new String[]{{
-                    add("string"),
-                }};
+            DeleteSnippetsRequest req = DeleteSnippetsRequest.builder()
+                .teamId(841399L)
+                .xRequestID("<value>")
+                .ids(java.util.List.of(
+                    "<value>"))
+                .build();
 
-            }};
+            DeleteSnippetsResponse res = sdk.snippet().delete()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.DeleteSnippetsResponse res = sdk.snippet.delete(req);
-
-            if (res.deleteResponse != null) {
+            if (res.deleteResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -66,8 +78,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.DeleteSnippetsResponse](../../models/operations/DeleteSnippetsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.DeleteSnippetsResponse>](../../models/operations/DeleteSnippetsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## find
 
@@ -79,44 +96,55 @@ Find snippets
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.FindSnippetsRequest;
 import com.writer.sdk.models.operations.FindSnippetsResponse;
 import com.writer.sdk.models.operations.SortField;
 import com.writer.sdk.models.operations.SortOrder;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(40141L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(40141L)
                 .build();
 
-            com.writer.sdk.models.operations.FindSnippetsRequest req = new FindSnippetsRequest(
-                326883L){{
-                limit = 488098L;
-                offset = 949900L;
-                search = "string";
-                shortcuts = new String[]{{
-                    add("string"),
-                }};
-                sortField = SortField.MODIFICATION_TIME;
-                sortOrder = SortOrder.ASC;
-                tags = new String[]{{
-                    add("string"),
-                }};
+            FindSnippetsRequest req = FindSnippetsRequest.builder()
+                .teamId(326883L)
+                .limit(488098L)
+                .offset(949900L)
+                .search("<value>")
+                .shortcuts(java.util.List.of(
+                    "<value>"))
+                .sortField(SortField.MODIFICATION_TIME)
+                .sortOrder(SortOrder.ASC)
+                .tags(java.util.List.of(
+                    "<value>"))
+                .build();
 
-            }};
+            FindSnippetsResponse res = sdk.snippet().find()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.FindSnippetsResponse res = sdk.snippet.find(req);
-
-            if (res.paginatedResultSnippetWithUser != null) {
+            if (res.paginatedResultSnippetWithUser().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -133,8 +161,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.FindSnippetsResponse](../../models/operations/FindSnippetsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.FindSnippetsResponse>](../../models/operations/FindSnippetsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## update
 
@@ -146,48 +179,52 @@ Update snippets
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.UpdateSnippetsRequest;
 import com.writer.sdk.models.operations.UpdateSnippetsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
 import com.writer.sdk.models.shared.SnippetTagV2;
 import com.writer.sdk.models.shared.SnippetUpdate;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(857478L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(857478L)
                 .build();
 
-            com.writer.sdk.models.operations.UpdateSnippetsRequest req = new UpdateSnippetsRequest(
-                24555L){{
-                requestBody = new com.writer.sdk.models.shared.SnippetUpdate[]{{
-                    add(new SnippetUpdate(
-                    "string",
-                    "string"){{
-                        id = "<ID>";
-                        snippet = "string";
-                        tags = new com.writer.sdk.models.shared.SnippetTagV2[]{{
-                            add(new SnippetTagV2(
-                            "string"){{
-                                tag = "string";
-                            }}),
-                        }};
-                    }}),
-                }};
-                xRequestID = "string";
+            UpdateSnippetsRequest req = UpdateSnippetsRequest.builder()
+                .teamId(24555L)
+                .requestBody(java.util.List.of(
+                    SnippetUpdate.builder()
+                        .id("<value>")
+                        .snippet("<value>")
+                        .build()))
+                .xRequestID("<value>")
+                .build();
 
-            }};
+            UpdateSnippetsResponse res = sdk.snippet().update()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.UpdateSnippetsResponse res = sdk.snippet.update(req);
-
-            if (res.classes != null) {
+            if (res.classes().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -204,5 +241,10 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.UpdateSnippetsResponse](../../models/operations/UpdateSnippetsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.UpdateSnippetsResponse>](../../models/operations/UpdateSnippetsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |

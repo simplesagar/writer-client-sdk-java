@@ -3,25 +3,38 @@
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.GetSubscriptionDetailsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(850421L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(850421L)
                 .build();
 
-            com.writer.sdk.models.operations.GetSubscriptionDetailsResponse res = sdk.billing.getSubscriptionDetails();
+            GetSubscriptionDetailsResponse res = sdk.billing().getSubscriptionDetails()
+                .call();
 
-            if (res.subscriptionPublicResponseApi != null) {
+            if (res.subscriptionPublicResponseApi().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }

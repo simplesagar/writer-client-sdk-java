@@ -1,5 +1,5 @@
 # Terminology
-(*terminology*)
+(*terminology()*)
 
 ## Overview
 
@@ -22,8 +22,10 @@ Add terms
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.AddTermsRequest;
 import com.writer.sdk.models.operations.AddTermsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.ApprovedTermExtensionCreate;
 import com.writer.sdk.models.shared.CreateTermsRequest;
 import com.writer.sdk.models.shared.FailHandling;
@@ -37,75 +39,48 @@ import com.writer.sdk.models.shared.TermExampleCreateType;
 import com.writer.sdk.models.shared.TermMistakeCreate;
 import com.writer.sdk.models.shared.TermMistakeCreatePos;
 import com.writer.sdk.models.shared.TermTagCreate;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(551477L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(551477L)
                 .build();
 
-            com.writer.sdk.models.operations.AddTermsRequest req = new AddTermsRequest(
-                new CreateTermsRequest(
-){{
-                    failHandling = FailHandling.VALIDATE_ONLY;
-                    models = new com.writer.sdk.models.shared.TermCreate[]{{
-                        add(new TermCreate(
-                        false,
-                        "string",
-                        TermCreateType.PENDING){{
-                            approvedTermExtension = new ApprovedTermExtensionCreate(
-                            false,
-                            false,
-                            false){{
-                                capitalize = false;
-                                fixCase = false;
-                                fixCommonMistakes = false;
-                            }};
-                            caseSensitive = false;
-                            examples = new com.writer.sdk.models.shared.TermExampleCreate[]{{
-                                add(new TermExampleCreate(
-                                "string",
-                                TermExampleCreateType.BAD){{
-                                    example = "string";
-                                    type = TermExampleCreateType.BAD;
-                                }}),
-                            }};
-                            linkedTerms = new com.writer.sdk.models.shared.LinkedTermCreate[]{{
-                                add(new LinkedTermCreate(
-                                ){{}}),
-                            }};
-                            mistakes = new com.writer.sdk.models.shared.TermMistakeCreate[]{{
-                                add(new TermMistakeCreate(
-                                false,
-                                "string"){{
-                                    caseSensitive = false;
-                                    mistake = "string";
-                                }}),
-                            }};
-                            tags = new com.writer.sdk.models.shared.TermTagCreate[]{{
-                                add(new TermTagCreate(
-                                "string"){{
-                                    tag = "string";
-                                }}),
-                            }};
-                            term = "string";
-                            type = TermCreateType.PENDING;
-                        }}),
-                    }};
+            AddTermsRequest req = AddTermsRequest.builder()
+                .createTermsRequest(CreateTermsRequest.builder()
+                        .failHandling(FailHandling.VALIDATE_ONLY)
+                        .models(java.util.List.of(
+                            TermCreate.builder()
+                                .caseSensitive(false)
+                                .term("<value>")
+                                .type(TermCreateType.BANNED)
+                                .build()))
+                        .build())
+                .teamId(822001L)
+                .build();
 
-                }},
-                953696L);
+            AddTermsResponse res = sdk.terminology().add()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.AddTermsResponse res = sdk.terminology.add(req);
-
-            if (res.createTermsResponse != null) {
+            if (res.createTermsResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -122,8 +97,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.AddTermsResponse](../../models/operations/AddTermsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.AddTermsResponse>](../../models/operations/AddTermsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## delete
 
@@ -135,35 +115,47 @@ Delete terms
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.DeleteTermsRequest;
 import com.writer.sdk.models.operations.DeleteTermsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(545907L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(545907L)
                 .build();
 
-            com.writer.sdk.models.operations.DeleteTermsRequest req = new DeleteTermsRequest(
-                841399L){{
-                xRequestID = "string";
-                ids = new Long[]{{
-                    add(698486L),
-                }};
+            DeleteTermsRequest req = DeleteTermsRequest.builder()
+                .teamId(841399L)
+                .xRequestID("<value>")
+                .ids(java.util.List.of(
+                    698486L))
+                .build();
 
-            }};
+            DeleteTermsResponse res = sdk.terminology().delete()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.DeleteTermsResponse res = sdk.terminology.delete(req);
-
-            if (res.deleteResponse != null) {
+            if (res.deleteResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -180,8 +172,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.DeleteTermsResponse](../../models/operations/DeleteTermsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.DeleteTermsResponse>](../../models/operations/DeleteTermsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## find
 
@@ -193,45 +190,57 @@ Find terms
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.FindTermsRequest;
 import com.writer.sdk.models.operations.FindTermsResponse;
 import com.writer.sdk.models.operations.PartOfSpeech;
 import com.writer.sdk.models.operations.QueryParamSortField;
 import com.writer.sdk.models.operations.QueryParamSortOrder;
 import com.writer.sdk.models.operations.Type;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.Security;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(40141L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(40141L)
                 .build();
 
-            com.writer.sdk.models.operations.FindTermsRequest req = new FindTermsRequest(
-                326883L){{
-                limit = 488098L;
-                offset = 949900L;
-                partOfSpeech = PartOfSpeech.ADJECTIVE;
-                sortField = QueryParamSortField.TERM;
-                sortOrder = QueryParamSortOrder.ASC;
-                tags = new String[]{{
-                    add("string"),
-                }};
-                term = "string";
-                type = Type.PENDING;
+            FindTermsRequest req = FindTermsRequest.builder()
+                .teamId(326883L)
+                .limit(488098L)
+                .offset(949900L)
+                .partOfSpeech(PartOfSpeech.ADJECTIVE)
+                .sortField(QueryParamSortField.TERM)
+                .sortOrder(QueryParamSortOrder.ASC)
+                .tags(java.util.List.of(
+                    "<value>"))
+                .term("<value>")
+                .type(Type.PENDING)
+                .build();
 
-            }};
+            FindTermsResponse res = sdk.terminology().find()
+                .request(req)
+                .call();
 
-            com.writer.sdk.models.operations.FindTermsResponse res = sdk.terminology.find(req);
-
-            if (res.paginatedResultFullTermWithUser != null) {
+            if (res.paginatedResultFullTermWithUser().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -248,8 +257,13 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.FindTermsResponse](../../models/operations/FindTermsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.FindTermsResponse>](../../models/operations/FindTermsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
 
 ## update
 
@@ -261,8 +275,10 @@ Update terms
 package hello.world;
 
 import com.writer.sdk.Writer;
+import com.writer.sdk.models.operations.*;
 import com.writer.sdk.models.operations.UpdateTermsRequest;
 import com.writer.sdk.models.operations.UpdateTermsResponse;
+import com.writer.sdk.models.shared.*;
 import com.writer.sdk.models.shared.ApprovedTermExtensionCreate;
 import com.writer.sdk.models.shared.LinkedTermCreate;
 import com.writer.sdk.models.shared.Security;
@@ -276,80 +292,50 @@ import com.writer.sdk.models.shared.TermUpdatePos;
 import com.writer.sdk.models.shared.TermUpdateType;
 import com.writer.sdk.models.shared.UpdateTermsRequest;
 import com.writer.sdk.models.shared.UpdateTermsRequestFailHandling;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import static java.util.Map.entry;
 
 public class Application {
+
     public static void main(String[] args) {
         try {
             Writer sdk = Writer.builder()
-                .setSecurity(new Security(
-                "string"){{
-                    apiKey = "<YOUR_API_KEY_HERE>";
-                }})
-                .setOrganizationId(857478L)
+                .security(Security.builder()
+                    .apiKey("<YOUR_API_KEY_HERE>")
+                    .build())
+                .organizationId(857478L)
                 .build();
 
-            com.writer.sdk.models.operations.UpdateTermsRequest req = new UpdateTermsRequest(
-                new UpdateTermsRequest(
-){{
-                    failHandling = UpdateTermsRequestFailHandling.ACCUMULATE;
-                    models = new com.writer.sdk.models.shared.TermUpdate[]{{
-                        add(new TermUpdate(
-                        false,
-                        991464L,
-                        "string",
-                        TermUpdateType.APPROVED){{
-                            approvedTermExtension = new ApprovedTermExtensionCreate(
-                            false,
-                            false,
-                            false){{
-                                capitalize = false;
-                                fixCase = false;
-                                fixCommonMistakes = false;
-                            }};
-                            caseSensitive = false;
-                            examples = new com.writer.sdk.models.shared.TermExampleCreate[]{{
-                                add(new TermExampleCreate(
-                                "string",
-                                TermExampleCreateType.GOOD){{
-                                    example = "string";
-                                    type = TermExampleCreateType.BAD;
-                                }}),
-                            }};
-                            id = 344620L;
-                            linkedTerms = new com.writer.sdk.models.shared.LinkedTermCreate[]{{
-                                add(new LinkedTermCreate(
-                                ){{}}),
-                            }};
-                            mistakes = new com.writer.sdk.models.shared.TermMistakeCreate[]{{
-                                add(new TermMistakeCreate(
-                                false,
-                                "string"){{
-                                    caseSensitive = false;
-                                    mistake = "string";
-                                }}),
-                            }};
-                            tags = new com.writer.sdk.models.shared.TermTagCreate[]{{
-                                add(new TermTagCreate(
-                                "string"){{
-                                    tag = "string";
-                                }}),
-                            }};
-                            term = "string";
-                            type = TermUpdateType.PENDING;
-                        }}),
-                    }};
+            UpdateTermsRequest req = UpdateTermsRequest.builder()
+                .updateTermsRequest(UpdateTermsRequest.builder()
+                        .failHandling(UpdateTermsRequestFailHandling.ACCUMULATE)
+                        .models(java.util.List.of(
+                            TermUpdate.builder()
+                                .caseSensitive(false)
+                                .id(344620L)
+                                .term("<value>")
+                                .type(TermUpdateType.PENDING)
+                                .build()))
+                        .build())
+                .teamId(991464L)
+                .xRequestID("<value>")
+                .build();
 
-                }},
-                627690L){{
-                xRequestID = "string";
+            UpdateTermsResponse res = sdk.terminology().update()
+                .request(req)
+                .call();
 
-            }};
-
-            com.writer.sdk.models.operations.UpdateTermsResponse res = sdk.terminology.update(req);
-
-            if (res.createTermsResponse != null) {
+            if (res.createTermsResponse().isPresent()) {
                 // handle response
             }
+        } catch (com.writer.sdk.models.errors.FailResponse e) {
+            // handle exception
+        } catch (com.writer.sdk.models.errors.SDKError e) {
+            // handle exception
         } catch (Exception e) {
             // handle exception
         }
@@ -366,5 +352,10 @@ public class Application {
 
 ### Response
 
-**[com.writer.sdk.models.operations.UpdateTermsResponse](../../models/operations/UpdateTermsResponse.md)**
+**[Optional<? extends com.writer.sdk.models.operations.UpdateTermsResponse>](../../models/operations/UpdateTermsResponse.md)**
+### Errors
 
+| Error Object                              | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| com.writer.sdk.models.errors.FailResponse | 400,401,403,404,500                       | application/json                          |
+| models/errors/SDKError                    | 4xx-5xx                                   | */*                                       |
